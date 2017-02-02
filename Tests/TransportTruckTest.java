@@ -10,7 +10,7 @@ public class TransportTruckTest {
     public void dropRamp() throws Exception {
         o.currentSpeed = 1;
         o.dropRamp();
-        assertTrue(!o.r.rampLowered);
+        assertTrue(!o.isRamplowered());
     }
 
     @Test
@@ -26,7 +26,7 @@ public class TransportTruckTest {
 
         o.dropRamp();
         o.loadUpACar(car);
-        assertTrue(o.s.getStorageSize() == 0);
+        assertTrue(o.getStorageSize() == 0);
     }
 
     @Test
@@ -37,6 +37,6 @@ public class TransportTruckTest {
         o.loadUpACar(car1);
         o.loadUpACar(car2);
         o.loadDownLastCar(car1);
-        assertTrue(o.s.getStorageSize() == 2);
+        assertTrue(o.getStorageSize() == 2);
     }
 }

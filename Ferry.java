@@ -21,28 +21,47 @@ public class Ferry extends TransportationVehicle {
 
     @Override
     protected double speedFactor() {
-        return 2;
+        return 10;
+    }
+
+    @Override
+    public void move() {
+        if (!this.r.isRampLowered())
+            super.move();
+    }
+
+    public boolean isRamplowered() {
+        return r.isRampLowered();
     }
 
     public void dropRamp() {
         if (currentSpeed == 0) {
-            r.rampLowered = true;
+            r.lowerRamp();
         }
     }
 
-    public  void loadUpACar(TransportationVehicle car) {
-        if (r.rampLowered && getDistance(car) <= r.loadDistance &&
-                s.storage.size() < s.maxNumberOfSlots) {
-            s.storage.add(car);
+    public void raiseRamp() {
+        if (currentSpeed == 0) {
+            r.raiseRamp();
+        }
+    }
+
+    public int getStorageSize() {
+        return s.getStorageSize();
+    }
+
+    public void loadUpACar(TransportationVehicle car) {
+        if (r.isRampLowered() && getDistance(car) <= r.getLoadDisttance()) {
+            s.addACar(car);
             car.x = this.x;
             car.y = this.y;
         }
     }
 
     public void loadDownFirstCar(TransportationVehicle car) {
-        if (r.rampLowered && getDistance(car) <= r.loadDistance &&
-                s.storage.get(0) == car) {
-            s.storage.remove(0);
+        if (r.isRampLowered() && getDistance(car) <= r.getLoadDisttance() &&
+                s.identityOfFirstCar() == car) {
+            s.removeCar("first");
         }
     }
 }

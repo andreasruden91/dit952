@@ -24,24 +24,44 @@ public class TransportTruck extends TransportationVehicle {
         return 1;
     }
 
+    @Override
+    public void move() {
+        if (!this.r.isRampLowered())
+        super.move();
+    }
+
+    public boolean isRamplowered() {
+        return r.isRampLowered();
+    }
+
     public void dropRamp() {
         if (currentSpeed == 0) {
-            r.rampLowered = true;
+            r.lowerRamp();
         }
     }
 
+    public void raiseRamp() {
+        if (currentSpeed == 0) {
+            r.raiseRamp();
+        }
+    }
+
+    public int getStorageSize() {
+        return s.getStorageSize();
+    }
+
     public void loadUpACar(TransportationVehicle car) {
-        if (r.rampLowered && getDistance(car) <= r.loadDistance) {
-            s.storage.add(car);
+        if (r.isRampLowered() && getDistance(car) <= r.getLoadDisttance()) {
+            s.addACar(car);
             car.x = this.x;
             car.y = this.y;
         }
     }
 
     public void loadDownLastCar (TransportationVehicle car) {
-        if (r.rampLowered && getDistance(car) <= r.loadDistance &&
-                s.storage.get(s.storage.size() - 1) == car) {
-            s.storage.remove(s.storage.size() - 1);
+        if (r.isRampLowered() && getDistance(car) <= r.getLoadDisttance()
+                && s.identityOfLastCar() == car) {
+            s.removeCar("last");
         }
     }
 }

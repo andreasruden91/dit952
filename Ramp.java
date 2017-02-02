@@ -2,8 +2,8 @@
  * Created by BenJ on 2017-02-02.
  */
 public class Ramp {
-    protected boolean rampLowered;
-    protected double loadDistance;
+    private boolean rampLowered;
+    private double loadDistance;
 
 
 
@@ -15,4 +15,17 @@ public class Ramp {
     public boolean isRampLowered() {
         return rampLowered;
     }
+
+    public double getLoadDisttance() {
+        return loadDistance;
+    }
+
+    public void lowerRamp() {
+        rampLowered = true;
+    }
+
+    public void raiseRamp() {
+        rampLowered = false;
+    }
+
 }
