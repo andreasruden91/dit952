@@ -1,16 +1,16 @@
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by BenJ on 2/1/17.
- */
 public class Ferry extends TransportationVehicle {
-    private List<TransportationVehicle> storage;
-    private int maxNumberOfSlots = 5;
-    private int[] maxInputSize = {200, 200, 150}; // dimensions: width, height and depth
-    private int rampStatus = 0; // 0 = undropped, 1 = dropped
+    private final int maxNumberOfSlots = 5;
+    private final int[] maxInputSize = {200, 200, 150}; // dimensions: width, height and depth
+    private final double loadDistance = 30;
 
-    Ferry(){
+    private List<TransportationVehicle> storage;
+    private boolean rampLowered;
+
+    Ferry() {
         x = 0;
         y = 0;
         nrDoors = 2;
@@ -18,41 +18,43 @@ public class Ferry extends TransportationVehicle {
         currentSpeed = 0;
         color = Color.red;
         modelName = "Ferry";
+
+        storage = new ArrayList<>();
+        rampLowered = false;
+
         stopEngine();
     }
 
     @Override
     protected double speedFactor() {
-        return 0;
+        return 1;
     }
 
-    protected void dropRamp() {
+    public void dropRamp() {
         if (currentSpeed == 0) {
-            rampStatus = 1;
+            rampLowered = true;
         }
     }
 
-    protected int getRampStatus() {
-        return rampStatus;
-    }
+    public boolean isRampLowered() { return rampLowered; }
 
-    protected  void loadUpACar (int distanceInBetween, TransportationVehicle car) {
-        if(rampStatus == 1 && maxNumberOfSlots <= 1 && distanceInBetween <= 30) {
+    public  void loadUpACar(TransportationVehicle car) {
+        if (rampLowered && getDistance(car) <= loadDistance &&
+                storage.size() < maxNumberOfSlots) {
             storage.add(car);
-            maxNumberOfSlots --;
             car.x = this.x;
             car.y = this.y;
         }
     }
 
-    protected void loadDownFirstCar (int distance, TransportationVehicle car) {
-        if(rampStatus == 1 && distance <= 30 && storage.get(0) == car) {
+    public void loadDownFirstCar(TransportationVehicle car) {
+        if (rampLowered && getDistance(car) <= loadDistance &&
+                storage.get(0) == car) {
             storage.remove(0);
-            maxNumberOfSlots++;
         }
     }
 
-    protected int getStorageSize(){
+    public int getStorageSize(){
         return storage.size();
     }
 }

@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Scania extends Car {
+public class Scania extends TransportationVehicle {
     Scania() {
         nrDoors = 2;
         enginePower = 730;

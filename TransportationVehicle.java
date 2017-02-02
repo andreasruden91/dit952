@@ -138,6 +138,17 @@ public abstract class TransportationVehicle implements Movable {
     }
 
     /**
+     * Get the distance between vehicles.
+     * @param other the vehicle we're checking distance to
+     * @return distance between vehicles
+     */
+    public double getDistance(TransportationVehicle other) {
+        double dx = Math.pow(x - other.x, 2);
+        double dy = Math.pow(y - other.y, 2);
+        return Math.sqrt(dx + dy);
+    }
+
+    /**
      * Give gas, increasing the TransportationVehicle's speed
      * @param amount percentage of gas pressure (0..1)
      */

@@ -1,10 +1,9 @@
 import org.junit.Test;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import static org.junit.Assert.*;
 
-public class TransportTruckTest {
-    TransportTruck o = new TransportTruck();
+public class FerryTest {
+    Ferry o = new Ferry();
 
     @Test
     public void dropRamp() throws Exception {
@@ -30,13 +29,13 @@ public class TransportTruckTest {
     }
 
     @Test
-    public void loadDownLastCar() throws Exception {
+    public void loadDownFirstCar() throws Exception {
         TransportationVehicle car1 = new Volvo240();
         TransportationVehicle car2 = new Saab95();
         o.dropRamp();
         o.loadUpACar(car1);
         o.loadUpACar(car2);
-        o.loadDownLastCar(car1);
+        o.loadDownFirstCar(car2);
         assertTrue(o.getStorageSize() == 2);
     }
 }
