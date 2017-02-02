@@ -1,27 +1,27 @@
 import java.awt.*;
 
-public class Ferry extends TransportationVehicle {
+public class TransportTruck extends TransportationVehicle {
     protected Ramp r;
     protected Storage s;
 
-    Ferry() {
+    TransportTruck(){
         x = 0;
         y = 0;
         nrDoors = 2;
         enginePower = 1000;
         currentSpeed = 0;
         color = Color.red;
-        modelName = "Ferry";
+        modelName = "Transport Truck";
 
         r = new Ramp();
-        s = new Storage(20);
+        s = new Storage(5);
 
         stopEngine();
     }
 
     @Override
     protected double speedFactor() {
-        return 2;
+        return 1;
     }
 
     public void dropRamp() {
@@ -30,19 +30,18 @@ public class Ferry extends TransportationVehicle {
         }
     }
 
-    public  void loadUpACar(TransportationVehicle car) {
-        if (r.rampLowered && getDistance(car) <= r.loadDistance &&
-                s.storage.size() < s.maxNumberOfSlots) {
+    public void loadUpACar(TransportationVehicle car) {
+        if (r.rampLowered && getDistance(car) <= r.loadDistance) {
             s.storage.add(car);
             car.x = this.x;
             car.y = this.y;
         }
     }
 
-    public void loadDownFirstCar(TransportationVehicle car) {
+    public void loadDownLastCar (TransportationVehicle car) {
         if (r.rampLowered && getDistance(car) <= r.loadDistance &&
-                s.storage.get(0) == car) {
-            s.storage.remove(0);
+                s.storage.get(s.storage.size() - 1) == car) {
+            s.storage.remove(s.storage.size() - 1);
         }
     }
 }
