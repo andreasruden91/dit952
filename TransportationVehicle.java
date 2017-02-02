@@ -1,11 +1,11 @@
 import java.awt.*;
 
-public abstract class Car implements Movable {
+public abstract class TransportationVehicle implements Movable {
     // Movable data
     protected int currentDirection;
     protected double x;
     protected double y;
-    // Car data
+    // TransportationVehicle data
     protected int nrDoors; // Number of doors on the car
     protected double enginePower; // Engine power of the car
     protected double currentSpeed; // The current speed of the car
@@ -13,9 +13,9 @@ public abstract class Car implements Movable {
     protected String modelName; // The car model name
 
     /**
-     * Construct a new Car.
+     * Construct a new TransportationVehicle.
      */
-    public Car() {
+    public TransportationVehicle() {
         currentDirection = 0;
         x = 0;
         y = 0;
@@ -81,7 +81,7 @@ public abstract class Car implements Movable {
     }
 
     /**
-     * Increase speed of Car.
+     * Increase speed of TransportationVehicle.
      * @param amount speed increase
      */
     private void incrementSpeed(double amount) {
@@ -89,7 +89,7 @@ public abstract class Car implements Movable {
     }
 
     /**
-     * Decrease speed of Car.
+     * Decrease speed of TransportationVehicle.
      * @param amount speed decrease
      */
     private void decrementSpeed(double amount) {
@@ -138,7 +138,7 @@ public abstract class Car implements Movable {
     }
 
     /**
-     * Give gas, increasing the Car's speed
+     * Give gas, increasing the TransportationVehicle's speed
      * @param amount percentage of gas pressure (0..1)
      */
     public void gas(double amount) {
