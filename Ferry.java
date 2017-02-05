@@ -1,7 +1,8 @@
 import java.awt.*;
 
 public class Ferry extends TransportationVehicle {
-    protected Ramp r;
+    private final int maxRampAngle = 130;
+    protected Ramp ramp;
     protected Storage s;
 
     Ferry() {
@@ -13,7 +14,7 @@ public class Ferry extends TransportationVehicle {
         color = Color.red;
         modelName = "Ferry";
 
-        r = new Ramp();
+        ramp = new Ramp(maxRampAngle);
         s = new Storage(20);
 
         stopEngine();
@@ -25,24 +26,21 @@ public class Ferry extends TransportationVehicle {
     }
 
     @Override
-    public void move() {
-        if (!this.r.isRampLowered())
-            super.move();
-    }
+    public boolean canMove() { return ramp.isClosed(); }
 
-    public boolean isRamplowered() {
-        return r.isRampLowered();
+    public boolean isRampLowered() {
+        return ramp.isOpen();
     }
 
     public void dropRamp() {
         if (currentSpeed == 0) {
-            r.lowerRamp();
+            ramp.lower(maxRampAngle);
         }
     }
 
     public void raiseRamp() {
         if (currentSpeed == 0) {
-            r.raiseRamp();
+            ramp.raise(maxRampAngle);
         }
     }
 
@@ -51,7 +49,7 @@ public class Ferry extends TransportationVehicle {
     }
 
     public void loadUpACar(TransportationVehicle car) {
-        if (r.isRampLowered() && getDistance(car) <= r.getLoadDisttance()) {
+        if (ramp.isOpen() && getDistance(car) <= ramp.getLoadDistance()) {
             s.addACar(car);
             car.x = this.x;
             car.y = this.y;
@@ -59,7 +57,7 @@ public class Ferry extends TransportationVehicle {
     }
 
     public void loadDownFirstCar(TransportationVehicle car) {
-        if (r.isRampLowered() && getDistance(car) <= r.getLoadDisttance() &&
+        if (ramp.isOpen() && getDistance(car) <= ramp.getLoadDistance() &&
                 s.identityOfFirstCar() == car) {
             s.removeCar("first");
         }

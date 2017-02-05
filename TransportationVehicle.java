@@ -24,6 +24,9 @@ public abstract class TransportationVehicle implements Movable {
     // Abstract methods
     protected abstract double speedFactor();
 
+    // Override this if movement is dependent on certain conditions.
+    protected boolean canMove() { return true; }
+
     // Behaviors
 
     /**
@@ -103,7 +106,11 @@ public abstract class TransportationVehicle implements Movable {
      */
     @Override
     public void move() {
-        switch(currentDirection) {
+        if (!canMove()) {
+            return;
+        }
+
+        switch (currentDirection) {
             case 0: // 0 = North
                 y += currentSpeed*durationOfMovement;
                 break;
@@ -153,6 +160,10 @@ public abstract class TransportationVehicle implements Movable {
      * @param amount percentage of gas pressure (0..1)
      */
     public void gas(double amount) {
+        if (!canMove()) {
+            return;
+        }
+
         if (amount > 0) {
             if (amount > 1)
                 amount = 1;

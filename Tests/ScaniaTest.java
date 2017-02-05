@@ -11,6 +11,6 @@ public class ScaniaTest {
         scania.gas(0.5);
 
         assertTrue(scania.getCurrentSpeed() == 0 &&
-                scania.getFlatBedAngle() == 15);
+                scania.getFlatbedAngle() == 15);
     }
 }

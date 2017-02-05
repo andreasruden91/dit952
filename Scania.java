@@ -1,6 +1,8 @@
 import java.awt.*;
 
 public class Scania extends TransportationVehicle {
+    private Ramp flatbed;
+
     Scania() {
         nrDoors = 2;
         enginePower = 730;
@@ -9,43 +11,30 @@ public class Scania extends TransportationVehicle {
         modelName = "Scania R 730 V8";
         stopEngine();
 
-        flatBedAngle = 0;
+        flatbed = new Ramp(70);
     }
 
     @Override
-    protected double speedFactor() {
-        if (flatBedAngle > 0) {
-            return 0.0;
-        }
-        return 1.0;
-    }
+    protected double speedFactor() { return 1.0; }
 
-    private int flatBedAngle; // degrees [0, 70]
+    @Override
+    public boolean canMove() { return flatbed.isClosed(); }
 
     /**
-     * Get the flatbed's current angle.
-     * @return current angle of flatbed
+     * Get angle of flatbed.
+     * @return current angle
      */
-    public double getFlatBedAngle() { return flatBedAngle; }
+    public int getFlatbedAngle() { return flatbed.getAngle(); }
 
     /**
      * Raise the truck's flat bed.
      * @param angle raise the flatbed by amount degrees.
      */
-    public void raiseFlatBed(int angle) {
-        if (angle > 0 && flatBedAngle + angle <= 70 &&
-                getCurrentSpeed() == 0) {
-            flatBedAngle += angle;
-        }
-    }
+    public void raiseFlatBed(int angle) { flatbed.raise(angle); }
 
     /**
      * Lower the truck's flat bed.
      * @param angle lower the flatbed by amount degrees.
      */
-    public void lowerFlatBed(int angle) {
-        if (angle > 0 && flatBedAngle - angle >= 0) {
-            flatBedAngle -= angle;
-        }
-    }
+    public void lowerFlatBed(int angle) { flatbed.lower(angle); }
 }
