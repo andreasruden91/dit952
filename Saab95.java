@@ -10,7 +10,7 @@ public class Saab95 extends TransportationVehicle {
     /**
      * Construct a new Saab95 instance
      */
-    public Saab95() {
+     Saab95() {
         nrDoors = 2;
         color = Color.red;
         enginePower = 125;
@@ -19,10 +19,23 @@ public class Saab95 extends TransportationVehicle {
         stopEngine();
     }
 
+    /**
+     * Gets the width of the Saab95
+     * @return width of the Saab95
+     */
     @Override
     public int getWidth() { return 170; }
+
+    /**
+     * Gets the height of the Saab95
+     * @return Height of the Saab95
+     */
     @Override
     public int getHeight() { return 140; }
+    /**
+     * Gets the depth of the Saab95
+     * @return Depth of the Saab95
+     */
     @Override
     public int getDepth() { return 240; }
 

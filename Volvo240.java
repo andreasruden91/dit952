@@ -10,7 +10,7 @@ public class Volvo240 extends TransportationVehicle {
     /**
      * Construct a new Volvo240 instance
      */
-    public Volvo240() {
+    Volvo240() {
         nrDoors = 4;
         color = Color.black;
         enginePower = 100;
@@ -18,10 +18,22 @@ public class Volvo240 extends TransportationVehicle {
         stopEngine();
     }
 
+    /**
+     * Gets the width of the Volvo240
+     * @return width of the Volvo240
+     */
     @Override
     public int getWidth() { return 170; }
+    /**
+     * Gets the height of the Volvo240
+     * @return Height of the Volvo240
+     */
     @Override
     public int getHeight() { return 140; }
+    /**
+     * Gets the Depth of the Volvo240
+     * @return Depth of the Volvo240
+     */
     @Override
     public int getDepth() { return 240; }
 

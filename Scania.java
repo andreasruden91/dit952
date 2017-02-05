@@ -3,6 +3,9 @@ import java.awt.*;
 public class Scania extends TransportationVehicle {
     private Ramp flatbed;
 
+    /**
+     * Construct a new Scania instance
+     */
     Scania() {
         nrDoors = 2;
         enginePower = 730;
@@ -17,13 +20,31 @@ public class Scania extends TransportationVehicle {
     @Override
     protected double speedFactor() { return 1.0; }
 
+    /**
+     * The Scania is able to move if the flatbed is closed
+     * @return Scania can move
+     */
     @Override
     public boolean canMove() { return flatbed.isClosed(); }
 
+    /**
+     * Gets the width of the Scania
+     * @return width of the Scania
+     */
     @Override
     public int getWidth() { return 260; }
+
+    /**
+     * Gets the height of the Scania
+     * @return Height of the Scania
+     */
     @Override
     public int getHeight() { return 320; }
+
+    /**
+     * Gets the depth of the Scania
+     * @return Depth of the Scania
+     */
     @Override
     public int getDepth() { return 680; }
 
