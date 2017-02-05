@@ -36,19 +36,28 @@ public class Ferry extends TransportationVehicle {
      * @return depth of Ferry
      */
     @Override
-        public int getDepth() { return 24000; }
+    public int getDepth() { return 24000; }
 
-        @Override
-        protected double speedFactor() {
-            return 10;
-        }
+    @Override
+    protected double speedFactor() {
+        return 10;
+    }
 
     /**
      * Ferry is eligible to move if ramp is closed
      * @return Ferry can move
      */
     @Override
-        public boolean canMove() { return storage.isRampClosed(); }
+    public boolean canMove() { return storage.isRampClosed(); }
+
+    /**
+     * Move ferry.
+     */
+    @Override
+    public void move() {
+        super.move();
+        storage.onMovement();
+    }
 
     /**
      * Can drop the ramp if the Ferry is on standby

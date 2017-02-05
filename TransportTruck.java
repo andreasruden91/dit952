@@ -56,6 +56,15 @@ public class TransportTruck extends TransportationVehicle {
     public boolean canMove() { return storage.isRampClosed(); }
 
     /**
+     * Move truck.
+     */
+    @Override
+    public void move() {
+        super.move();
+        storage.onMovement();
+    }
+
+    /**
      * Can drop the ramp if the TransportTruck is on standby
      */
     public void dropRamp() {

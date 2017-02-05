@@ -27,4 +27,22 @@ public class FerryTest {
         ferry.move();
         assertTrue(ferry.x == x && ferry.y == y);
     }
+
+    @Test
+    public void movePropagatesToTransportedVehiclesTest() throws Exception {
+        TransportationVehicle car1 = new Volvo240();
+        TransportationVehicle car2 = new Volvo240();
+
+        ferry.dropRamp();
+        ferry.loadVehicle(car1);
+        ferry.raiseRamp();
+        ferry.startEngine();
+        for (int i = 0; i < 10; ++ i) {
+            ferry.gas(1);
+            ferry.move();
+        }
+        ferry.stopEngine();
+
+        assertTrue(car2.getDistance(car1) > 50);
+    }
 }
