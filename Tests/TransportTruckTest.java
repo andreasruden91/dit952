@@ -10,7 +10,7 @@ public class TransportTruckTest {
     public void dropRamp() throws Exception {
         o.currentSpeed = 1;
         o.dropRamp();
-        assertTrue(!o.isRamplowered());
+        assertTrue(!o.isRampLowered());
     }
 
     @Test
