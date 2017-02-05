@@ -1,9 +1,7 @@
 import java.awt.*;
 
 public class Ferry extends TransportationVehicle {
-    private final int maxRampAngle = 130;
-    protected Ramp ramp;
-    protected Storage s;
+    protected VehicleTransportationUnit storage;
 
     Ferry() {
         x = 0;
@@ -14,11 +12,17 @@ public class Ferry extends TransportationVehicle {
         color = Color.red;
         modelName = "Ferry";
 
-        ramp = new Ramp(maxRampAngle);
-        s = new Storage(20);
+        storage = new VehicleTransportationUnit(this, 20);
 
         stopEngine();
     }
+
+    @Override
+    public int getWidth() { return 16000; }
+    @Override
+    public int getHeight() { return 4000; }
+    @Override
+    public int getDepth() { return 24000; }
 
     @Override
     protected double speedFactor() {
@@ -26,40 +30,21 @@ public class Ferry extends TransportationVehicle {
     }
 
     @Override
-    public boolean canMove() { return ramp.isClosed(); }
-
-    public boolean isRampLowered() {
-        return ramp.isOpen();
-    }
+    public boolean canMove() { return storage.isRampClosed(); }
 
     public void dropRamp() {
         if (currentSpeed == 0) {
-            ramp.lower(maxRampAngle);
+            storage.dropRamp();
         }
     }
 
     public void raiseRamp() {
         if (currentSpeed == 0) {
-            ramp.raise(maxRampAngle);
+            storage.raiseRamp();
         }
     }
 
-    public int getStorageSize() {
-        return s.getStorageSize();
-    }
+    public void loadVehicle(TransportationVehicle vehicle) { storage.addVehicle(vehicle); }
 
-    public void loadUpACar(TransportationVehicle car) {
-        if (ramp.isOpen() && getDistance(car) <= ramp.getLoadDistance()) {
-            s.addACar(car);
-            car.x = this.x;
-            car.y = this.y;
-        }
-    }
-
-    public void loadDownFirstCar(TransportationVehicle car) {
-        if (ramp.isOpen() && getDistance(car) <= ramp.getLoadDistance() &&
-                s.identityOfFirstCar() == car) {
-            s.removeCar("first");
-        }
-    }
+    public TransportationVehicle unloadFirstVehicle() { return storage.removeVehicleFront(); }
 }

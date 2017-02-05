@@ -19,7 +19,12 @@ public class Saab95 extends TransportationVehicle {
         stopEngine();
     }
 
-    // Behaviors
+    @Override
+    public int getWidth() { return 170; }
+    @Override
+    public int getHeight() { return 140; }
+    @Override
+    public int getDepth() { return 240; }
 
     /**
      * Activate the Saab's turbo function

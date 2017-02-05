@@ -9,8 +9,8 @@ public abstract class TransportationVehicle implements Movable {
     protected int nrDoors; // Number of doors on the car
     protected double enginePower; // Engine power of the car
     protected double currentSpeed; // The current speed of the car
-    protected Color color; // Color of the car
-    protected String modelName; // The car model name
+    protected Color color; // Color of the vehicle
+    protected String modelName; // The vehicle model name
 
     /**
      * Construct a new TransportationVehicle.
@@ -23,6 +23,24 @@ public abstract class TransportationVehicle implements Movable {
 
     // Abstract methods
     protected abstract double speedFactor();
+
+    /**
+     * Get width in centimeters.
+     * @return width in cm
+     */
+    public abstract int getWidth();
+
+    /**
+     * Get height in centimeters.
+     * @return height in cm
+     */
+    public abstract int getHeight();
+
+    /**
+     * Get depth in centimeters.
+     * @return length in cm
+     */
+    public abstract int getDepth();
 
     // Override this if movement is dependent on certain conditions.
     protected boolean canMove() { return true; }
@@ -97,6 +115,16 @@ public abstract class TransportationVehicle implements Movable {
      */
     private void decrementSpeed(double amount) {
         currentSpeed = getCurrentSpeed() - speedFactor() * amount;
+    }
+
+    /**
+     * Relocate the vehicle. An outside force (like a tornado or a transportation unit) relocated the vehicle.
+     * @param newX our new X coordinate
+     * @param newY our new Y coordinate
+     */
+    public void relocate(double newX, double newY) {
+        x = newX;
+        y = newY;
     }
 
     // Movable Interface Methods

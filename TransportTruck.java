@@ -3,12 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransportTruck extends TransportationVehicle {
-    private final int maxNumberOfSlots = 5;
-    private final int[] maxInputSize = {200, 200, 150}; // dimensions: width, height and depth
-    private final int maxRampAngle = 130;
-
-    private List<TransportationVehicle> storage;
-    Ramp ramp;
+    private VehicleTransportationUnit storage;
 
     TransportTruck(){
         x = 0;
@@ -19,11 +14,17 @@ public class TransportTruck extends TransportationVehicle {
         color = Color.red;
         modelName = "Transport Truck";
 
-        storage = new ArrayList<>();
-        ramp = new Ramp(maxRampAngle);
+        storage = new VehicleTransportationUnit(this, 5);
 
         stopEngine();
     }
+
+    @Override
+    public int getWidth() { return 260; }
+    @Override
+    public int getHeight() { return 320; }
+    @Override
+    public int getDepth() { return 680; }
 
     @Override
     protected double speedFactor() {
@@ -31,40 +32,21 @@ public class TransportTruck extends TransportationVehicle {
     }
 
     @Override
-    public boolean canMove() { return ramp.isClosed(); }
+    public boolean canMove() { return storage.isRampClosed(); }
 
     public void dropRamp() {
         if (currentSpeed == 0) {
-            ramp.lower(maxRampAngle);
+            storage.dropRamp();
         }
     }
 
     public void raiseRamp() {
         if (currentSpeed == 0) {
-            ramp.raise(maxRampAngle);
+            storage.raiseRamp();
         }
     }
 
-    public boolean isRampLowered() {
-        return ramp.isOpen();
-    }
+    public void loadVehicle(TransportationVehicle vehicle) { storage.addVehicle(vehicle); }
 
-    public void loadUpACar(TransportationVehicle car) {
-        if (ramp.isOpen() && getDistance(car) <= ramp.getLoadDistance()) {
-            storage.add(car);
-            car.x = this.x;
-            car.y = this.y;
-        }
-    }
-
-    public void loadDownLastCar (TransportationVehicle car) {
-        if (ramp.isOpen() && getDistance(car) <= ramp.getLoadDistance() &&
-                storage.get(storage.size() - 1) == car) {
-            storage.remove(storage.size() - 1);
-        }
-    }
-
-    public int getStorageSize(){
-        return storage.size();
-    }
+    public TransportationVehicle unloadLastVehicle() { return storage.removeVehicleBack(); }
 }

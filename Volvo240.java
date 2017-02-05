@@ -18,7 +18,13 @@ public class Volvo240 extends TransportationVehicle {
         stopEngine();
     }
 
-    // Behaviors
+    @Override
+    public int getWidth() { return 170; }
+    @Override
+    public int getHeight() { return 140; }
+    @Override
+    public int getDepth() { return 240; }
+
     @Override
     protected double speedFactor() {
         return enginePower * 0.01 * trimFactor;

@@ -3,39 +3,28 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class FerryTest {
-    Ferry o = new Ferry();
+    Ferry ferry = new Ferry();
 
     @Test
-    public void dropRamp() throws Exception {
-        o.currentSpeed = 1;
-        o.dropRamp();
-        assertTrue(!o.isRampLowered());
-    }
-
-    @Test
-    public void loadUpACar() throws Exception {
-        TransportationVehicle car = new Volvo240();
-
-        car.startEngine();
-        for (int i = 0; i < 10; ++i) {
-            car.gas(1);
-        }
-        car.move();
-        car.stopEngine();
-
-        o.dropRamp();
-        o.loadUpACar(car);
-        assertTrue(o.getStorageSize() == 0);
-    }
-
-    @Test
-    public void loadDownFirstCar() throws Exception {
+    public void multipleVehiclesFIFOTest() throws Exception {
         TransportationVehicle car1 = new Volvo240();
         TransportationVehicle car2 = new Saab95();
-        o.dropRamp();
-        o.loadUpACar(car1);
-        o.loadUpACar(car2);
-        o.loadDownFirstCar(car2);
-        assertTrue(o.getStorageSize() == 2);
+        TransportationVehicle car3 = new Saab95();
+        ferry.dropRamp();
+        ferry.loadVehicle(car1);
+        ferry.loadVehicle(car2);
+        ferry.loadVehicle(car3);
+        assertTrue(ferry.unloadFirstVehicle() == car1);
+    }
+
+    @Test
+    public void moveRampOpenTest() throws Exception {
+        double x = ferry.x;
+        double y = ferry.y;
+        ferry.dropRamp();
+        ferry.startEngine();
+        ferry.gas(2);
+        ferry.move();
+        assertTrue(ferry.x == x && ferry.y == y);
     }
 }
