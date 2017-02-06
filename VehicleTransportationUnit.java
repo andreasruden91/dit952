@@ -64,7 +64,7 @@ public class VehicleTransportationUnit {
      * @return vehicle that's been the longest time on the unit, or null if no vehicle could be retrieved
      */
     public TransportationVehicle removeVehicleFront() {
-        if (!storage.isEmpty()) {
+        if (ramp.isOpen() && !storage.isEmpty()) {
             return storage.remove(0);
         }
         return null;
