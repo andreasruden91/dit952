@@ -79,6 +79,15 @@ public abstract class TransportationVehicle implements Movable {
         return color;
     }
 
+    public double[] getPosition() {
+        double[] array = {x,y};
+        return array;
+    }
+
+    public String getName() {
+        return modelName;
+    }
+
     /**
      * Set the color of the car
      * @param clr new color
