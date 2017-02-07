@@ -22,14 +22,15 @@ public class CarController {
     CarView frame;
     // A list of cars, modify if needed
 
-    ArrayList<TransportationVehicle> cars = new ArrayList<>(3);
+    private static ArrayList<TransportationVehicle> vehicles = new ArrayList<>();
     //methods:
 
     public static void main(String[] args) {
+
         // Instance of this class
         CarController cc = new CarController();
 
-        cc.cars.add(new Volvo240());
+        // Add vehicles
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -43,11 +44,15 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (TransportationVehicle car : cars) {
+            vehicles.add(new Volvo240());
+            vehicles.add(new Saab95());
+            vehicles.add(new Scania());
+
+            for (TransportationVehicle car : vehicles) {
                 car.move();
                 int x = (int) Math.round(car.getPosition()[0]);
                 int y = (int) Math.round(car.getPosition()[1]);
-                frame.drawPanel.moveit(x,y, car);
+                frame.drawPanel.moveit(x,y, vehicles);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
@@ -55,11 +60,65 @@ public class CarController {
     }
     //TODO
     // Calls the gas method for each car once
+    ArrayList<TransportationVehicle> getList() {
+        return vehicles;
+    }
+
     void gas(int amount) {
         double gas = ((double) amount) / 100;
-        for (TransportationVehicle car : cars
-                ) {
-            car.gas(gas);
+        for (TransportationVehicle vehicle : vehicles) {
+            vehicle.gas(gas);
+        }
+    }
+
+    void brake(int amount) {
+        double brake = (double) amount/2.0;
+        for (TransportationVehicle vehicle : vehicles) {
+            vehicle.brake(amount);
+        }
+    }
+
+    void turboOn() {
+        for (TransportationVehicle vehicle : vehicles) {
+            if (vehicle.getName().equals("Saab95")) {
+                ((Saab95) vehicle).setTurboOn();
+            }
+        }
+    }
+
+    void turboOff() {
+        for (TransportationVehicle vehicle : vehicles) {
+            if (vehicle.getName().equals("Saab95")) {
+                ((Saab95) vehicle).setTurboOff();
+            }
+        }
+    }
+
+    void liftBed(int angle) {
+        for (TransportationVehicle vechicle : vehicles) {
+            if(vechicle.getName().equals("Scania")) {
+                ((Scania) vechicle).raiseFlatBed(angle);
+            }
+        }
+    }
+
+    void lowerBed(int angle) {
+        for (TransportationVehicle vechicle : vehicles) {
+            if(vechicle.getName().equals("Scania")) {
+                ((Scania) vechicle).lowerFlatBed(angle);
+            }
+        }
+    }
+
+    void startAll() {
+        for (TransportationVehicle vehicle : vehicles) {
+            vehicle.startEngine();
+        }
+    }
+
+    void stopAll() {
+        for (TransportationVehicle vehicle : vehicles) {
+            vehicle.stopEngine();
         }
     }
 }

@@ -4,6 +4,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
@@ -18,33 +19,39 @@ public class CarView extends JFrame{
     private static final int Y = 800;
     private TransportationVehicle car = new Volvo240();
 
+
     // The controller member
     CarController carC;
+    ArrayList<TransportationVehicle> vehicles;
+    DrawPanel drawPanel     = new DrawPanel(X, Y-240, vehicles);
+    JPanel controlPanel     = new JPanel();
 
-    DrawPanel drawPanel = new DrawPanel(X, Y-240, car);
+    JPanel gasPanel         = new JPanel();
+    JSpinner gasSpinner     = new JSpinner();
+    int gasAmount           = 0;
+    int brakeAmount         = 1;
+    int liftLowerAmount     = 20;
 
-    JPanel controlPanel = new JPanel();
+    JLabel gasLabel         = new JLabel("Amount of gas");
 
-    JPanel gasPanel = new JPanel();
-    JSpinner gasSpinner = new JSpinner();
-    int gasAmount = 0;
-    JLabel gasLabel = new JLabel("Amount of gas");
+    JButton gasButton       = new JButton("Gas");
 
-    JButton gasButton = new JButton("Gas");
+    JButton brakeButton     = new JButton("Brake");
+    JButton turboOnButton   = new JButton("Saab Turbo on");
+    JButton turboOffButton  = new JButton("Saab Turbo off");
+    JButton liftBedButton   = new JButton("Scania Lift Bed");
+    JButton lowerBedButton  = new JButton("Lower Lift Bed");
 
-    JButton brakeButton = new JButton("Brake");
-    JButton turboOnButton = new JButton("Saab Turbo on");
-    JButton turboOffButton = new JButton("Saab Turbo off");
-    JButton liftBedButton = new JButton("Scania Lift Bed");
-    JButton lowerBedButton = new JButton("Lower Lift Bed");
-
-    JButton startButton = new JButton("Start all cars");
-    JButton stopButton = new JButton("Stop all cars");
+    JButton startButton     = new JButton("Start all cars");
+    JButton stopButton      = new JButton("Stop all cars");
 
     // Constructor
     public CarView(String framename, CarController cc){
         this.carC = cc;
         initComponents(framename);
+        vehicles.add(new Volvo240());
+        vehicles.add(new Saab95());
+        vehicles.add(new Scania());
     }
 
     // Sets everything in place and fits everything
@@ -109,6 +116,56 @@ public class CarView extends JFrame{
                 carC.gas(gasAmount);
             }
         });
+
+        brakeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.brake(brakeAmount);
+            }
+        });
+
+        turboOffButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.turboOff();
+            }
+        });
+
+        turboOnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.turboOn();
+            }
+        });
+
+        liftBedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.liftBed(liftLowerAmount);
+            }
+        });
+
+        lowerBedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.lowerBed(liftLowerAmount);
+            }
+        });
+
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.startAll();
+            }
+        });
+
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.stopAll();
+            }
+        });
+
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
