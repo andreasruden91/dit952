@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
+
 /*
 * This class represents the Controller part in the MVC pattern.
 * It's responsibilities is to listen to the View and responds in a appropriate manner by
@@ -21,16 +21,17 @@ public class CarController {
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
+    static ArrayList<TransportationVehicle> vehicles = new ArrayList<>();
 
-    private static ArrayList<TransportationVehicle> vehicles = new ArrayList<>();
     //methods:
 
     public static void main(String[] args) {
-
         // Instance of this class
         CarController cc = new CarController();
 
-        // Add vehicles
+        cc.vehicles.add(new Volvo240());
+        cc.vehicles.add(new Scania());
+        cc.vehicles.add(new Saab95());
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -44,20 +45,18 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            vehicles.add(new Volvo240());
-            vehicles.add(new Saab95());
-            vehicles.add(new Scania());
-
-            for (TransportationVehicle car : vehicles) {
-                car.move();
-                int x = (int) Math.round(car.getPosition()[0]);
-                int y = (int) Math.round(car.getPosition()[1]);
-                frame.drawPanel.moveit(x,y, vehicles);
+            for (TransportationVehicle vehicle : vehicles) {
+                vehicle.move();
+                int x = (int) Math.round(vehicle.getPosition()[0]);
+                int y = (int) Math.round(vehicle.getPosition()[1]);
+                frame.drawPanel.moveit(x, y);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
             }
         }
     }
+
+    // Calls the gas method for each car once
     //TODO
     // Calls the gas method for each car once
     ArrayList<TransportationVehicle> getList() {

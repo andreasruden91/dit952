@@ -11,7 +11,7 @@ public class Scania extends TransportationVehicle {
         enginePower = 730;
         currentSpeed = 0;
         color = Color.blue;
-            modelName = "Scania R 730 V8";
+        modelName = "Scania";
         stopEngine();
 
         flatbed = new Ramp(70);
