@@ -18,4 +18,6 @@ public interface Movable {
      * Rotate the Movable 90 degrees to the right
      */
     public void turnRight();
+
+    public void reverseDirection();
 }

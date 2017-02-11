@@ -5,41 +5,31 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * This class represents the full view of the MVC pattern of your car simulator.
- * It initializes with being center on the screen and attaching it's controller in it's state.
- * It communicates with the Controller by calling methods of it when an action fires of in
- * each of it's components.
- * TODO: Write more actionListeners and wire the rest of the buttons
- **/
-
 public class CarView extends JFrame{
     private static final int X = 800;
     private static final int Y = 800;
 
     // The controller member
     CarController carC;
-
-    DrawPanel drawPanel = new DrawPanel(X, Y-240);
+    DrawPanel drawPanel = new DrawPanel(X, Y-240, carC.vehicles);
+    int gasAmount       = 0;
+    int brakeAmount     = 1;
+    int liftLowerAmount = 20;
 
     JPanel controlPanel = new JPanel();
+    JPanel gasPanel     = new JPanel();
 
-    JPanel gasPanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
-    int gasAmount = 0;
-    int brakeAmount         = 1;
-    int liftLowerAmount = 20;
-    JLabel gasLabel = new JLabel("Amount of gas");
+    JLabel gasLabel     = new JLabel("Amount of gas");
 
-    JButton gasButton = new JButton("Gas");
-    JButton brakeButton = new JButton("Brake");
-    JButton turboOnButton = new JButton("Saab Turbo on");
-    JButton turboOffButton = new JButton("Saab Turbo off");
-    JButton liftBedButton = new JButton("Scania Lift Bed");
-    JButton lowerBedButton = new JButton("Lower Lift Bed");
-
-    JButton startButton = new JButton("Start all cars");
-    JButton stopButton = new JButton("Stop all cars");
+    JButton gasButton       = new JButton("Gas");
+    JButton brakeButton     = new JButton("Brake");
+    JButton turboOnButton   = new JButton("Saab Turbo on");
+    JButton turboOffButton  = new JButton("Saab Turbo off");
+    JButton liftBedButton   = new JButton("Scania Lift Bed");
+    JButton lowerBedButton  = new JButton("Lower Lift Bed");
+    JButton startButton     = new JButton("Start all cars");
+    JButton stopButton      = new JButton("Stop all cars");
 
     // Constructor
     public CarView(String framename, CarController cc){
@@ -47,8 +37,7 @@ public class CarView extends JFrame{
         initComponents(framename);
     }
 
-    // Sets everything in place and fits everything
-    // TODO: Take a good look and make sure you understand how these methods and components work
+
     private void initComponents(String title) {
 
         this.setTitle(title);

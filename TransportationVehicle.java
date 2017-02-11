@@ -16,7 +16,7 @@ public abstract class TransportationVehicle implements Movable {
      * Construct a new TransportationVehicle.
      */
     public TransportationVehicle() {
-        currentDirection = 0;
+        currentDirection = 1;
         x = 0;
         y = 0;
     }
@@ -161,6 +161,8 @@ public abstract class TransportationVehicle implements Movable {
                 x -= currentSpeed*durationOfMovement;
                 break;
         }
+
+
     }
 
     /**
@@ -178,6 +180,12 @@ public abstract class TransportationVehicle implements Movable {
     @Override
     public void turnRight() {
         currentDirection = (currentDirection+1) % 4;
+        move();
+    }
+
+    @Override
+    public void reverseDirection() {
+        currentDirection = (currentDirection + 2) % 4;
         move();
     }
 
@@ -208,6 +216,8 @@ public abstract class TransportationVehicle implements Movable {
             currentSpeed = Math.min(currentSpeed, enginePower);
         }
     }
+
+
 
     /**
      * Slows down the car, decreasing its speed
