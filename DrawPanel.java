@@ -13,7 +13,7 @@ public class DrawPanel extends JPanel{
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y, ArrayList<TransportationVehicle> vehicles) {
         this.setPreferredSize(new Dimension(x, y));
-        this.setBackground(Color.green);
+        this.setBackground(Color.WHITE);
         this.vehicles = vehicles;
         for (TransportationVehicle vehicle : vehicles) {
             GFXs.add(new VehicleGFX(vehicle));

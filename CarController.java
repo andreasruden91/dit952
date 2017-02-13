@@ -46,7 +46,7 @@ public class CarController {
                 vehicle.move();
                 int x = (int) Math.round(vehicle.getPosition()[0]);
                 int y = (int) Math.round(vehicle.getPosition()[1]);
-                if (x > 680 || x < 0 || y < 0 || y > 500) {
+                if (x > frame.getWidth() * 0.85 || x < 0 || y < 0 || y > frame.getHeight() * 0.625) {
                     vehicle.reverseDirection();
                 }
                 frame.drawPanel.repaint();
@@ -64,13 +64,13 @@ public class CarController {
     void brake(int amount) {
         double brake = (double) amount/2.0;
         for (TransportationVehicle vehicle : vehicles) {
-            vehicle.brake(amount);
+            vehicle.brake(brake);
         }
     }
 
     void turboOn() {
         for (TransportationVehicle vehicle : vehicles) {
-            if (vehicle.getName().equals("Saab95")) {
+            if (vehicle instanceof Saab95) {
                 ((Saab95) vehicle).setTurboOn();
             }
         }
@@ -78,24 +78,24 @@ public class CarController {
 
     void turboOff() {
         for (TransportationVehicle vehicle : vehicles) {
-            if (vehicle.getName().equals("Saab95")) {
+            if (vehicle instanceof Saab95) {
                 ((Saab95) vehicle).setTurboOff();
             }
         }
     }
 
     void liftBed(int angle) {
-        for (TransportationVehicle vechicle : vehicles) {
-            if(vechicle.getName().equals("Scania")) {
-                ((Scania) vechicle).raiseFlatBed(angle);
+        for (TransportationVehicle vehicle : vehicles) {
+            if(vehicle instanceof Scania) {
+                ((Scania) vehicle).raiseFlatBed(angle);
             }
         }
     }
 
     void lowerBed(int angle) {
-        for (TransportationVehicle vechicle : vehicles) {
-            if(vechicle.getName().equals("Scania")) {
-                ((Scania) vechicle).lowerFlatBed(angle);
+        for (TransportationVehicle vehicle : vehicles) {
+            if(vehicle instanceof Scania) {
+                ((Scania) vehicle).lowerFlatBed(angle);
             }
         }
     }
