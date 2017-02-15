@@ -1,0 +1,12 @@
+1. Make CarController not have any static data.
+
+2. Make CarView not depend on CarController.
+   Have event handlers in the view, that the view invokes when a user action (button press)
+   happens. The Controller registers listeners for the events when it makes the view, and
+   when one of them triggers it updates the model & view accordingly.
+
+3. frame.drawPanel.repaint(); // WRONG, directly referencing DrawPanel
+
+4. Rename TransportationVehicle -> Vehicle
+
+5. Add Car, Truck, Boat as abstract classes

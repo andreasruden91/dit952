@@ -35,9 +35,7 @@ public class CarController {
 
         // Start the timer
         cc.timer.start();
-
     }
-
 
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
