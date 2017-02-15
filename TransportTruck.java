@@ -1,12 +1,12 @@
 import java.awt.*;
 
-public class TransportTruck extends TransportationVehicle {
-    private VehicleTransportationUnit storage;
+public class TransportTruck extends Truck {
+    private StorageUnit storage;
 
     /**
      * Construct a new TransportTruck instance
      */
-    TransportTruck(){
+    TransportTruck() {
         x = 0;
         y = 0;
         nrDoors = 2;
@@ -15,31 +15,40 @@ public class TransportTruck extends TransportationVehicle {
         color = Color.red;
         modelName = "Transport Truck";
 
-        storage = new VehicleTransportationUnit(this, 5);
+        storage = new StorageUnit(this, 5);
 
         stopEngine();
     }
 
     /**
      * Gets the widht of the TransportTruck
+     *
      * @return width of the TransportTruck
      */
     @Override
-    public int getWidth() { return 260; }
+    public int getWidth() {
+        return 260;
+    }
 
     /**
      * Gets the height of the TransportTruck
+     *
      * @return height of the TransportTruck
      */
     @Override
-    public int getHeight() { return 320; }
+    public int getHeight() {
+        return 320;
+    }
 
     /**
      * Gets the depth of the TransportTruck
+     *
      * @return depth of the TransportTruck
      */
     @Override
-    public int getDepth() { return 680; }
+    public int getDepth() {
+        return 680;
+    }
 
     @Override
     protected double speedFactor() {
@@ -48,10 +57,13 @@ public class TransportTruck extends TransportationVehicle {
 
     /**
      * TransportTruck is eligible to move if ramp is closed
+     *
      * @return TransportTruck can move
      */
     @Override
-    public boolean canMove() { return storage.isRampClosed(); }
+    public boolean canMove() {
+        return storage.isRampClosed();
+    }
 
     /**
      * Move truck.
@@ -70,6 +82,7 @@ public class TransportTruck extends TransportationVehicle {
             storage.dropRamp();
         }
     }
+
     /**
      * Can raise the ramp if the TransportTruck is on standby
      */
@@ -81,13 +94,19 @@ public class TransportTruck extends TransportationVehicle {
 
     /**
      * Loads vehicle on to the TransportTruck if ramp is down
+     *
      * @param vehicle loads on to the TransportTruck
      */
-    public void loadVehicle(TransportationVehicle vehicle) { storage.addVehicle(vehicle); }
+    public void loadVehicle(Vehicle vehicle) {
+        storage.addVehicle(vehicle);
+    }
 
     /**
      * Unloads last vehicle from the TransportTruck
+     *
      * @return unload last vehicle from the TransportTruck
      */
-    public TransportationVehicle unloadLastVehicle() { return storage.removeVehicleBack(); }
+    public Vehicle unloadLastVehicle() {
+        return storage.removeVehicleBack();
+    }
 }

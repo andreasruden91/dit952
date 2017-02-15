@@ -1,21 +1,19 @@
 import java.awt.*;
 
-public abstract class TransportationVehicle implements Movable {
+public abstract class Vehicle implements Movable {
     // Movable data
     protected int currentDirection;
     protected double x;
     protected double y;
-    // TransportationVehicle data
-    protected int nrDoors; // Number of doors on the car
+    // Vehicle data
     protected double enginePower; // Engine power of the car
     protected double currentSpeed; // The current speed of the car
-    protected Color color; // Color of the vehicle
     protected String modelName; // The vehicle model name
 
     /**
-     * Construct a new TransportationVehicle.
+     * Construct a new Vehicle.
      */
-    public TransportationVehicle() {
+    public Vehicle() {
         currentDirection = 1;
         x = 0;
         y = 0;
@@ -26,37 +24,36 @@ public abstract class TransportationVehicle implements Movable {
 
     /**
      * Get width in centimeters.
+     *
      * @return width in cm
      */
     public abstract int getWidth();
 
     /**
      * Get height in centimeters.
+     *
      * @return height in cm
      */
     public abstract int getHeight();
 
     /**
      * Get depth in centimeters.
+     *
      * @return length in cm
      */
     public abstract int getDepth();
 
     // Override this if movement is dependent on certain conditions.
-    protected boolean canMove() { return true; }
+    protected boolean canMove() {
+        return true;
+    }
 
     // Behaviors
 
-    /**
-     * Get the number of doors
-     * @return number of doors
-     */
-    public int getNrDoors() {
-        return nrDoors;
-    }
 
     /**
      * Get the engine power
+     *
      * @return horse power (hk)
      */
     public double getEnginePower() {
@@ -65,22 +62,16 @@ public abstract class TransportationVehicle implements Movable {
 
     /**
      * Get the current speed of the car
+     *
      * @return speed in (km/h)
      */
     public double getCurrentSpeed() {
         return currentSpeed;
     }
 
-    /**
-     * Get the color of the car
-     * @return car's color
-     */
-    public Color getColor() {
-        return color;
-    }
 
     public double[] getPosition() {
-        double[] array = {x,y};
+        double[] array = {x, y};
         return array;
     }
 
@@ -88,13 +79,6 @@ public abstract class TransportationVehicle implements Movable {
         return modelName;
     }
 
-    /**
-     * Set the color of the car
-     * @param clr new color
-     */
-    public void setColor(Color clr) {
-        color = clr;
-    }
 
     /**
      * Starts the car's engine
@@ -111,7 +95,8 @@ public abstract class TransportationVehicle implements Movable {
     }
 
     /**
-     * Increase speed of TransportationVehicle.
+     * Increase speed of Vehicle.
+     *
      * @param amount speed increase
      */
     private void incrementSpeed(double amount) {
@@ -119,7 +104,8 @@ public abstract class TransportationVehicle implements Movable {
     }
 
     /**
-     * Decrease speed of TransportationVehicle.
+     * Decrease speed of Vehicle.
+     *
      * @param amount speed decrease
      */
     private void decrementSpeed(double amount) {
@@ -128,6 +114,7 @@ public abstract class TransportationVehicle implements Movable {
 
     /**
      * Relocate the vehicle. An outside force (like a tornado or a transportation unit) relocated the vehicle.
+     *
      * @param newX our new X coordinate
      * @param newY our new Y coordinate
      */
@@ -149,16 +136,16 @@ public abstract class TransportationVehicle implements Movable {
 
         switch (currentDirection) {
             case 0: // 0 = North
-                y += currentSpeed*durationOfMovement;
+                y += currentSpeed * durationOfMovement;
                 break;
             case 1: // 1 = East
-                x += currentSpeed*durationOfMovement;
+                x += currentSpeed * durationOfMovement;
                 break;
             case 2: // 2 = South
-                y -= currentSpeed*durationOfMovement;
+                y -= currentSpeed * durationOfMovement;
                 break;
             case 3: // 3 = West
-                x -= currentSpeed*durationOfMovement;
+                x -= currentSpeed * durationOfMovement;
                 break;
         }
 
@@ -170,7 +157,7 @@ public abstract class TransportationVehicle implements Movable {
      */
     @Override
     public void turnLeft() {
-        currentDirection = (currentDirection-1) % 4;
+        currentDirection = (currentDirection - 1) % 4;
         move();
     }
 
@@ -179,7 +166,7 @@ public abstract class TransportationVehicle implements Movable {
      */
     @Override
     public void turnRight() {
-        currentDirection = (currentDirection+1) % 4;
+        currentDirection = (currentDirection + 1) % 4;
         move();
     }
 
@@ -191,21 +178,23 @@ public abstract class TransportationVehicle implements Movable {
 
     /**
      * Get the distance between vehicles.
+     *
      * @param other the vehicle we're checking distance to
      * @return distance between vehicles
      */
-    public double getDistance(TransportationVehicle other) {
+    public double getDistance(Vehicle other) {
         double dx = Math.pow(x - other.x, 2);
         double dy = Math.pow(y - other.y, 2);
         return Math.sqrt(dx + dy);
     }
 
     /**
-     * Give gas, increasing the TransportationVehicle's speed
+     * Give gas, increasing the Vehicle's speed
+     *
      * @param amount percentage of gas pressure (0..1)
      */
     public void gas(double amount) {
-        if (!canMove()) {
+        if (!canMove() || currentSpeed == 0) {
             return;
         }
 
@@ -217,13 +206,12 @@ public abstract class TransportationVehicle implements Movable {
         }
     }
 
-
-
     /**
      * Slows down the car, decreasing its speed
+     *
      * @param amount percentage of break pressure (0..1)
      */
-    public void brake(double amount){
+    public void brake(double amount) {
         if (amount > 0) {
             if (amount > 1)
                 amount = 1;

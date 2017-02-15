@@ -7,9 +7,9 @@ public class FerryTest {
 
     @Test
     public void multipleVehiclesFIFOTest() throws Exception {
-        TransportationVehicle car1 = new Volvo240();
-        TransportationVehicle car2 = new Saab95();
-        TransportationVehicle car3 = new Saab95();
+        Vehicle car1 = new Volvo240();
+        Vehicle car2 = new Saab95();
+        Vehicle car3 = new Saab95();
         ferry.dropRamp();
         ferry.loadVehicle(car1);
         ferry.loadVehicle(car2);
@@ -30,8 +30,8 @@ public class FerryTest {
 
     @Test
     public void movePropagatesToTransportedVehiclesTest() throws Exception {
-        TransportationVehicle car1 = new Volvo240();
-        TransportationVehicle car2 = new Volvo240();
+        Vehicle car1 = new Volvo240();
+        Vehicle car2 = new Volvo240();
 
         ferry.dropRamp();
         ferry.loadVehicle(car1);

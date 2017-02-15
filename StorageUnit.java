@@ -6,16 +6,16 @@ import java.util.List;
  * the storage unit, and then be transported along a secondary vehicle which
  * the storage unit is mounted on.
  */
-public class VehicleTransportationUnit {
+public class StorageUnit {
     private static final int[] maxInputSize = {200, 200, 300}; // Width, Height, Depth
     private static int maxRampAngle = 130;
 
     private final int maxNumberOfSlots;
-    private List<TransportationVehicle> storage;
+    private List<Vehicle> storage;
     private Ramp ramp;
-    private TransportationVehicle attachedTo;
+    private Vehicle attachedTo;
 
-    public VehicleTransportationUnit(TransportationVehicle attachedTo, int slots) {
+    public StorageUnit(Vehicle attachedTo, int slots) {
         maxNumberOfSlots = slots;
         storage = new ArrayList<>();
         ramp = new Ramp(maxRampAngle);
@@ -50,7 +50,7 @@ public class VehicleTransportationUnit {
      * Add a vehicle to the back of the transportation unit.
      * @param vehicle the vehicle to add
      */
-    public void addVehicle(TransportationVehicle vehicle) {
+    public void addVehicle(Vehicle vehicle) {
         if (ramp.isOpen() && acceptableDimensions(vehicle) &&
                 attachedTo.getDistance(vehicle) <= ramp.getLoadDistance() &&
                 !storage.contains(vehicle)) {
@@ -63,7 +63,7 @@ public class VehicleTransportationUnit {
      * Get the vehicle at the front of the transportation unit (first in first out)
      * @return vehicle that's been the longest time on the unit, or null if no vehicle could be retrieved
      */
-    public TransportationVehicle removeVehicleFront() {
+    public Vehicle removeVehicleFront() {
         if (ramp.isOpen() && !storage.isEmpty()) {
             return storage.remove(0);
         }
@@ -74,14 +74,14 @@ public class VehicleTransportationUnit {
      * Get the vehicle at the front of the transportation unit (last in first out)
      * @return vehicle that's been the shortest time on the unit, or null if no vehicle could be retrieved
      */
-    public TransportationVehicle removeVehicleBack() {
+    public Vehicle removeVehicleBack() {
         if (ramp.isOpen() && !storage.isEmpty()) {
             return storage.remove(storage.size() - 1);
         }
         return null;
     }
 
-    private boolean acceptableDimensions(TransportationVehicle vehicle) {
+    private boolean acceptableDimensions(Vehicle vehicle) {
         return vehicle.getWidth() <= maxInputSize[0] &&
                 vehicle.getHeight() <= maxInputSize[1] &&
                 vehicle.getDepth() <= maxInputSize[2];

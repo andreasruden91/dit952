@@ -1,5 +1,4 @@
 import org.junit.Test;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import static org.junit.Assert.*;
 
@@ -8,7 +7,7 @@ public class TransportTruckTest {
 
     @Test
     public void loadVehicleTest() throws Exception {
-        TransportationVehicle car = new Volvo240();
+        Vehicle car = new Volvo240();
         truck.dropRamp();
         truck.loadVehicle(car);
         assertTrue(truck.unloadLastVehicle() == car);
@@ -16,7 +15,7 @@ public class TransportTruckTest {
 
     @Test
     public void tooBigVehicleTest() throws Exception {
-        TransportationVehicle car = new TransportTruck();
+        Vehicle car = new TransportTruck();
         truck.dropRamp();
         truck.loadVehicle(car);
         assertTrue(truck.unloadLastVehicle() == null);
@@ -24,9 +23,9 @@ public class TransportTruckTest {
 
     @Test
     public void multipleVehiclesLIFOTest() throws Exception {
-        TransportationVehicle car1 = new Volvo240();
-        TransportationVehicle car2 = new Saab95();
-        TransportationVehicle car3 = new Saab95();
+        Vehicle car1 = new Volvo240();
+        Vehicle car2 = new Saab95();
+        Vehicle car3 = new Saab95();
         truck.dropRamp();
         truck.loadVehicle(car1);
         truck.loadVehicle(car2);
@@ -36,8 +35,8 @@ public class TransportTruckTest {
 
     @Test
     public void rampStatusLoadingTest() throws Exception {
-        TransportationVehicle car1 = new Volvo240();
-        TransportationVehicle car2 = new Saab95();
+        Vehicle car1 = new Volvo240();
+        Vehicle car2 = new Saab95();
 
         truck.dropRamp();
         truck.loadVehicle(car1);
@@ -49,8 +48,8 @@ public class TransportTruckTest {
 
     @Test
     public void loadingSameVehicleTest() throws Exception {
-        TransportationVehicle car1 = new Volvo240();
-        TransportationVehicle car2 = new Saab95();
+        Vehicle car1 = new Volvo240();
+        Vehicle car2 = new Saab95();
 
         truck.dropRamp();
         truck.loadVehicle(car1);

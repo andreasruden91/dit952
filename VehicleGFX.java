@@ -8,10 +8,10 @@ import java.io.IOException;
 public class VehicleGFX {
     // State
     BufferedImage img;
-    TransportationVehicle vehicle;
+    Vehicle vehicle;
 
     // Constructor
-    public VehicleGFX(TransportationVehicle vehicle){
+    public VehicleGFX(Vehicle vehicle){
         try {
             img = ImageIO.read(new File("src\\pics\\" + vehicle.getName() + ".jpg"));
         }catch (IOException ex) {

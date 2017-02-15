@@ -6,16 +6,17 @@ import java.util.List;
 
 // This panel represent the animated part of the view with the car images.
 
-public class DrawPanel extends JPanel{
+public class DrawPanel extends JPanel {
 
     List<VehicleGFX> GFXs = new ArrayList<>(3);
-    ArrayList<TransportationVehicle> vehicles = new ArrayList<>();
+    ArrayList<Vehicle> vehicles = new ArrayList<>();
+
     // Initializes the panel and reads the images
-    public DrawPanel(int x, int y, ArrayList<TransportationVehicle> vehicles) {
+    public DrawPanel(int x, int y, ArrayList<Vehicle> vehicles) {
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.WHITE);
         this.vehicles = vehicles;
-        for (TransportationVehicle vehicle : vehicles) {
+        for (Vehicle vehicle : vehicles) {
             GFXs.add(new VehicleGFX(vehicle));
         }
 

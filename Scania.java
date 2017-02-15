@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Scania extends TransportationVehicle {
+public class Scania extends Truck {
     private Ramp flatbed;
 
     /**
@@ -18,51 +18,74 @@ public class Scania extends TransportationVehicle {
     }
 
     @Override
-    protected double speedFactor() { return 1.0; }
+    protected double speedFactor() {
+        return 1.0;
+    }
 
     /**
      * The Scania is able to move if the flatbed is closed
+     *
      * @return Scania can move
      */
     @Override
-    public boolean canMove() { return flatbed.isClosed(); }
+    public boolean canMove() {
+        return flatbed.isClosed();
+    }
 
     /**
      * Gets the width of the Scania
+     *
      * @return width of the Scania
      */
     @Override
-    public int getWidth() { return 260; }
+    public int getWidth() {
+        return 260;
+    }
 
     /**
      * Gets the height of the Scania
+     *
      * @return Height of the Scania
      */
     @Override
-    public int getHeight() { return 320; }
+    public int getHeight() {
+        return 320;
+    }
 
     /**
      * Gets the depth of the Scania
+     *
      * @return Depth of the Scania
      */
     @Override
-    public int getDepth() { return 680; }
+    public int getDepth() {
+        return 680;
+    }
 
     /**
      * Get angle of flatbed.
+     *
      * @return current angle
      */
-    public int getFlatbedAngle() { return flatbed.getAngle(); }
+    public int getFlatbedAngle() {
+        return flatbed.getAngle();
+    }
 
     /**
      * Raise the truck's flat bed.
+     *
      * @param angle raise the flatbed by amount degrees.
      */
-    public void raiseFlatBed(int angle) { flatbed.raise(angle); }
+    public void raiseFlatBed(int angle) {
+        flatbed.raise(angle);
+    }
 
     /**
      * Lower the truck's flat bed.
+     *
      * @param angle lower the flatbed by amount degrees.
      */
-    public void lowerFlatBed(int angle) { flatbed.lower(angle); }
+    public void lowerFlatBed(int angle) {
+        flatbed.lower(angle);
+    }
 }

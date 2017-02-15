@@ -13,8 +13,8 @@ public class CarController {
     private final int delay = 50;
     private Timer timer = new Timer(delay, new TimerListener());
 
-    static CarView frame;
-    static ArrayList<TransportationVehicle> vehicles = new ArrayList<>();
+    private CarView frame;
+    ArrayList<Vehicle> vehicles = new ArrayList<>();
 
     //methods:
 
@@ -40,7 +40,7 @@ public class CarController {
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             for (int i = 0; i < vehicles.size(); i++) {
-                TransportationVehicle vehicle = vehicles.get(i);
+                Vehicle vehicle = vehicles.get(i);
                 vehicle.move();
                 int x = (int) Math.round(vehicle.getPosition()[0]);
                 int y = (int) Math.round(vehicle.getPosition()[1]);
@@ -54,20 +54,20 @@ public class CarController {
 
     void gas(int amount) {
         double gas = ((double) amount) / 100;
-        for (TransportationVehicle vehicle : vehicles) {
+        for (Vehicle vehicle : vehicles) {
             vehicle.gas(gas);
         }
     }
 
     void brake(int amount) {
-        double brake = (double) amount/2.0;
-        for (TransportationVehicle vehicle : vehicles) {
+        double brake = (double) amount / 2.0;
+        for (Vehicle vehicle : vehicles) {
             vehicle.brake(brake);
         }
     }
 
     void turboOn() {
-        for (TransportationVehicle vehicle : vehicles) {
+        for (Vehicle vehicle : vehicles) {
             if (vehicle instanceof Saab95) {
                 ((Saab95) vehicle).setTurboOn();
             }
@@ -75,7 +75,7 @@ public class CarController {
     }
 
     void turboOff() {
-        for (TransportationVehicle vehicle : vehicles) {
+        for (Vehicle vehicle : vehicles) {
             if (vehicle instanceof Saab95) {
                 ((Saab95) vehicle).setTurboOff();
             }
@@ -83,29 +83,29 @@ public class CarController {
     }
 
     void liftBed(int angle) {
-        for (TransportationVehicle vehicle : vehicles) {
-            if(vehicle instanceof Scania) {
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Scania) {
                 ((Scania) vehicle).raiseFlatBed(angle);
             }
         }
     }
 
     void lowerBed(int angle) {
-        for (TransportationVehicle vehicle : vehicles) {
-            if(vehicle instanceof Scania) {
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Scania) {
                 ((Scania) vehicle).lowerFlatBed(angle);
             }
         }
     }
 
     void startAll() {
-        for (TransportationVehicle vehicle : vehicles) {
+        for (Vehicle vehicle : vehicles) {
             vehicle.startEngine();
         }
     }
 
     void stopAll() {
-        for (TransportationVehicle vehicle : vehicles) {
+        for (Vehicle vehicle : vehicles) {
             vehicle.stopEngine();
         }
     }
