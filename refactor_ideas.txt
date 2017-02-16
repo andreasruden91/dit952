@@ -1,14 +1,68 @@
 1. Make CarController not have any static data. - DONE
 
-2. Make CarView not depend on CarController.
+2. Rename Vehicle -> Vehicle                    - DONE
+
+3. Add Car, Truck, Boat as abstract classes     - Done
+
+4. gas bug: cars start without starting their engine - Done
+
+5. frame.drawPanel.repaint(); // WRONG, directly referencing DrawPanel
+
+6. Make CarView not depend on CarController.
    Have event handlers in the view, that the view invokes when a user action (button press)
    happens. The Controller registers listeners for the events when it makes the view, and
    when one of them triggers it updates the model & view accordingly.
-
-3. frame.drawPanel.repaint(); // WRONG, directly referencing DrawPanel
-
-4. Rename Vehicle -> Vehicle                    - DONE
-
-5. Add Car, Truck, Boat as abstract classes     - Done
-
-6. gas bug: cars start without starting their engine
+   
+   Note: We DO need an interface that decides how the View notifies the Controller.
+   Just consider this: What happens if we realize that we want a separate view, maybe
+   we want to present our model as a webpage, or as text, or something that isn't a GUI
+   like we have now. Then we would need to make a second View. However, if the controller
+   directly refers to the type of view we have, this becomes impossible. Ergo the Controller
+   needs to communicate with the View through an interface.
+   
+   IMPORTANT: Controller should NOT have a main() method, nor should it create the View
+   object. Instead we need a new static class for the Application.
+   
+   More concretely:
+   
+   1. Come up with a plan for how to do event handling.
+      view.registerGasEvent(...handler...)
+      view.registerBrakeEvent(...handler...)
+      ...
+    OR:
+      enum Event {
+        GAS, BRAKE, ...
+      }
+      ...
+      view.registerEvent(Event.GAS, ...handler...)
+    OR some other model? Consider what event handlers look like, as well as how
+    you store event handlers and invoke them. (We can look at this together if it's
+    a unfamiliar concept).
+   
+   2. Make a communications interface that defines how event handling works
+   public interface ViewInterface { ... }
+   
+   3. Change CarController to deal with the Interface, not one specific View
+   public class CarController {
+     ...
+     CarController(ViewInterface viewIf) {
+       this.view = viewIf;
+     }
+     ...
+   }
+   
+   4. CarView needs to be creatable without creating the controller first
+      (see point 5 for justification), this means we should not pass
+      a List of cars when we make the view, but rather be able to add
+      a car after the view is created. Keep in mind the speficication of
+      how to add a car has to go into the ViewInterface!
+   
+   5. Create the application class
+     public static class CarSimApplication {
+       public static void main(String[] args) {
+         CarView view = new CarView();
+         CarController controller = new CarController(view);
+         
+         controller.run(); // Run the simulation
+       }
+     }
