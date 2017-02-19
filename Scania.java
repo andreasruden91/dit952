@@ -2,6 +2,7 @@ import java.awt.*;
 
 public class Scania extends Truck {
     private Ramp flatbed;
+    protected static final int maxAngle = 70;
 
     /**
      * Construct a new Scania instance
@@ -14,7 +15,7 @@ public class Scania extends Truck {
         modelName = "Scania";
         stopEngine();
 
-        flatbed = new Ramp(70);
+        flatbed = new Ramp(maxAngle);
     }
 
     @Override

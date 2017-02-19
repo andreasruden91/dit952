@@ -4,17 +4,16 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-public class CarView extends JFrame {
+public class CarView extends JFrame implements ViewInterface {
     private static final int X = 800;
     private static final int Y = 800;
 
     // The controller member
-    CarController carC;
     DrawPanel drawPanel;
+    ArrayList<EventHandlerInterface> handlers = new ArrayList<>();
     int gasAmount = 0;
-    int brakeAmount = 1;
-    int liftLowerAmount = 20;
 
     JPanel controlPanel = new JPanel();
     JPanel gasPanel = new JPanel();
@@ -32,12 +31,31 @@ public class CarView extends JFrame {
     JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
-    public CarView(String framename, CarController cc) {
-        this.carC = cc;
-        drawPanel = new DrawPanel(X, Y - 240, carC.vehicles);
+    public CarView(String framename) {
+        drawPanel = new DrawPanel(X, Y - 240);
         initComponents(framename);
     }
 
+    @Override
+    public void addVehicle(Vehicle vehicle) {
+        drawPanel.addVehicle(vehicle);
+    }
+
+    @Override
+    public void registerEventHandler(EventHandlerInterface handler) {
+        handlers.add(handler);
+    }
+
+    @Override
+    public float getWorldHeight() { return 500; }
+
+    @Override
+    public float getWorldWidth() { return 680; }
+
+    @Override
+    public void renderWorld() {
+        drawPanel.repaint();
+    }
 
     private void initComponents(String title) {
 
@@ -95,55 +113,55 @@ public class CarView extends JFrame {
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.gas(gasAmount);
+                gas(gasAmount);
             }
         });
         brakeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.brake(brakeAmount);
+                brake(gasAmount);
             }
         });
 
         turboOffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.turboOff();
+                turboOff();
             }
         });
 
         turboOnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.turboOn();
+                turboOn();
             }
         });
 
         liftBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.liftBed(liftLowerAmount);
+                liftBed();
             }
         });
 
         lowerBedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.lowerBed(liftLowerAmount);
+                lowerBed();
             }
         });
 
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.startAll();
+                startAll();
             }
         });
 
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.stopAll();
+                stopAll();
             }
         });
 
@@ -159,5 +177,59 @@ public class CarView extends JFrame {
         this.setVisible(true);
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    // Event handler
+
+
+
+    public void brake(int amount) {
+        double brake = (double) amount / 2.0;
+        for (EventHandlerInterface handler : handlers) {
+            handler.onBrake(brake);
+        }
+    }
+
+    public void gas(int amount) {
+        double gas = ((double) amount) / 100;
+        for (EventHandlerInterface handler : handlers) {
+            handler.onGas(gas);
+        }
+    }
+
+    public void turboOn() {
+        for (EventHandlerInterface handler : handlers) {
+            handler.onTurboToggle(true);
+        }
+    }
+
+    public void turboOff() {
+        for (EventHandlerInterface handler : handlers) {
+            handler.onTurboToggle(false);
+        }
+    }
+
+    public void liftBed() {
+        for (EventHandlerInterface handler : handlers) {
+            handler.onFlatbedToggle(true);
+        }
+    }
+
+    public void lowerBed() {
+        for (EventHandlerInterface handler : handlers) {
+            handler.onFlatbedToggle(false);
+        }
+    }
+
+    public void startAll() {
+        for (EventHandlerInterface handler : handlers) {
+            handler.onEngineToggle(true);
+        }
+    }
+
+    public void stopAll() {
+        for (EventHandlerInterface handler : handlers) {
+            handler.onEngineToggle(false);
+        }
     }
 }

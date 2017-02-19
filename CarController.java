@@ -9,32 +9,78 @@ import java.util.ArrayList;
 * modifying the model state and the updating the view.
  */
 
-public class CarController {
+public class CarController implements EventHandlerInterface {
     private final int delay = 50;
     private Timer timer = new Timer(delay, new TimerListener());
 
-    private CarView frame;
+    ViewInterface view;
     ArrayList<Vehicle> vehicles = new ArrayList<>();
 
-    //methods:
+    // Constructor:
+    CarController(ViewInterface view) {
+        view.registerEventHandler(this);
+        this.view = view;
+    }
 
-    public static void main(String[] args) {
-        // Instance of this class
-        CarController cc = new CarController();
-        cc.vehicles.add(new Volvo240());
-        cc.vehicles.get(0).relocate(0, 0);
+    public void run() {
+        timer.start();
+    }
 
-        cc.vehicles.add(new Scania());
-        cc.vehicles.get(1).relocate(0, 200);
+    public void addVehicle(Vehicle vehicle, float x, float y) {
+        vehicle.relocate(x, y);
+        vehicles.add(vehicle);
+        view.addVehicle(vehicle);
+    }
 
-        cc.vehicles.add(new Saab95());
-        cc.vehicles.get(2).relocate(0, 400);
+    @Override
+    public void onGas(double amount) {
+        for (Vehicle vehicle : vehicles) {
+            vehicle.gas(amount);
+        }
+    }
 
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
+    @Override
+    public void onBrake(double amount) {
+        for (Vehicle vehicle : vehicles) {
+            vehicle.brake(amount);
+        }
+    }
 
-        // Start the timer
-        cc.timer.start();
+    @Override
+    public void onFlatbedToggle(boolean lifted) {
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Scania) {
+                if (lifted) {
+                    ((Scania) vehicle).raiseFlatBed(Scania.maxAngle);
+                } else {
+                    ((Scania) vehicle).lowerFlatBed(Scania.maxAngle);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onEngineToggle(boolean start) {
+        for (Vehicle vehicle : vehicles) {
+            if (start) {
+                vehicle.startEngine();
+            } else {
+                vehicle.stopEngine();
+            }
+        }
+    }
+
+    @Override
+    public void onTurboToggle(boolean turbo) {
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle instanceof Saab95) {
+                if (turbo) {
+                    ((Saab95) vehicle).setTurboOn();
+                } else {
+                    ((Saab95) vehicle).setTurboOff();
+                }
+            }
+        }
     }
 
     private class TimerListener implements ActionListener {
@@ -44,69 +90,11 @@ public class CarController {
                 vehicle.move();
                 int x = (int) Math.round(vehicle.getPosition()[0]);
                 int y = (int) Math.round(vehicle.getPosition()[1]);
-                if (x > frame.getWidth() * 0.85 || x < 0 || y < 0 || y > frame.getHeight() * 0.625) {
+                if (x > view.getWorldWidth() || x < 0 || y < 0 || y > view.getWorldHeight()) {
                     vehicle.reverseDirection();
                 }
-                frame.drawPanel.repaint();
+                view.renderWorld();
             }
-        }
-    }
-
-    void gas(int amount) {
-        double gas = ((double) amount) / 100;
-        for (Vehicle vehicle : vehicles) {
-            vehicle.gas(gas);
-        }
-    }
-
-    void brake(int amount) {
-        double brake = (double) amount / 2.0;
-        for (Vehicle vehicle : vehicles) {
-            vehicle.brake(brake);
-        }
-    }
-
-    void turboOn() {
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof Saab95) {
-                ((Saab95) vehicle).setTurboOn();
-            }
-        }
-    }
-
-    void turboOff() {
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof Saab95) {
-                ((Saab95) vehicle).setTurboOff();
-            }
-        }
-    }
-
-    void liftBed(int angle) {
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof Scania) {
-                ((Scania) vehicle).raiseFlatBed(angle);
-            }
-        }
-    }
-
-    void lowerBed(int angle) {
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle instanceof Scania) {
-                ((Scania) vehicle).lowerFlatBed(angle);
-            }
-        }
-    }
-
-    void startAll() {
-        for (Vehicle vehicle : vehicles) {
-            vehicle.startEngine();
-        }
-    }
-
-    void stopAll() {
-        for (Vehicle vehicle : vehicles) {
-            vehicle.stopEngine();
         }
     }
 }

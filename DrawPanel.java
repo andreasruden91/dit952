@@ -9,17 +9,16 @@ import java.util.List;
 public class DrawPanel extends JPanel {
 
     List<VehicleGFX> GFXs = new ArrayList<>(3);
-    ArrayList<Vehicle> vehicles = new ArrayList<>();
 
     // Initializes the panel and reads the images
-    public DrawPanel(int x, int y, ArrayList<Vehicle> vehicles) {
+    public DrawPanel(int x, int y) {
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.WHITE);
-        this.vehicles = vehicles;
-        for (Vehicle vehicle : vehicles) {
-            GFXs.add(new VehicleGFX(vehicle));
-        }
 
+    }
+    public void addVehicle(Vehicle vehicle) {
+        VehicleGFX gfx = new VehicleGFX(vehicle);
+        GFXs.add(gfx);
     }
 
     @Override
