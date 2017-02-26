@@ -23,12 +23,14 @@ public class CarView extends JFrame implements ViewInterface {
 
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
-    JButton turboOnButton = new JButton("Saab Turbo on");
-    JButton turboOffButton = new JButton("Saab Turbo off");
-    JButton liftBedButton = new JButton("Scania Lift Bed");
-    JButton lowerBedButton = new JButton("Lower Lift Bed");
+    JButton turboOnButton = new JButton("S Turbo on");
+    JButton turboOffButton = new JButton("S Turbo off");
+    JButton liftBedButton = new JButton("Lift Bed");
+    JButton lowerBedButton = new JButton("Lower Bed");
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
+    JButton addCar = new JButton("Add Car");
+    JButton removeCar = new JButton("remove Car");
 
     // Constructor
     public CarView(String framename) {
@@ -39,6 +41,11 @@ public class CarView extends JFrame implements ViewInterface {
     @Override
     public void addVehicle(Vehicle vehicle) {
         drawPanel.addVehicle(vehicle);
+    }
+
+    @Override
+    public void removeVehicle(int n) {
+        drawPanel.removeVehicle(n);
     }
 
     @Override
@@ -89,13 +96,14 @@ public class CarView extends JFrame implements ViewInterface {
         controlPanel.add(gasButton, 0);
         controlPanel.add(turboOnButton, 1);
         controlPanel.add(liftBedButton, 2);
-        controlPanel.add(brakeButton, 3);
-        controlPanel.add(turboOffButton, 4);
-        controlPanel.add(lowerBedButton, 5);
+        controlPanel.add(addCar, 3);
+        controlPanel.add(brakeButton, 4);
+        controlPanel.add(turboOffButton, 5);
+        controlPanel.add(lowerBedButton, 6);
+        controlPanel.add(removeCar, 7);
         controlPanel.setPreferredSize(new Dimension((X / 2) + 4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
-
 
         startButton.setBackground(Color.blue);
         startButton.setForeground(Color.green);
@@ -165,6 +173,20 @@ public class CarView extends JFrame implements ViewInterface {
             }
         });
 
+        addCar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addCar();
+            }
+        });
+
+        removeCar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                removeCar();
+            }
+        });
+
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
@@ -230,6 +252,18 @@ public class CarView extends JFrame implements ViewInterface {
     public void stopAll() {
         for (EventHandlerInterface handler : handlers) {
             handler.onEngineToggle(false);
+        }
+    }
+
+    public void addCar() {
+        for (EventHandlerInterface handler : handlers) {
+            handler.addCar();
+        }
+    }
+
+    public void removeCar() {
+        for (EventHandlerInterface handler : handlers) {
+            handler.removeCar();
         }
     }
 }

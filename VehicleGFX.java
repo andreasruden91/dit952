@@ -13,7 +13,7 @@ public class VehicleGFX {
     // Constructor
     public VehicleGFX(Vehicle vehicle){
         try {
-            img = ImageIO.read(new File("src\\pics\\" + vehicle.getName() + ".jpg"));
+            img = ImageIO.read(new File("src/pics/" + vehicle.getName() + ".jpg"));
         }catch (IOException ex) {
             ex.printStackTrace();
         }

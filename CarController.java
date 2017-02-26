@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -10,6 +11,7 @@ import java.util.ArrayList;
  */
 
 public class CarController implements EventHandlerInterface {
+    static Random rand = new Random();
     private final int delay = 50;
     private Timer timer = new Timer(delay, new TimerListener());
 
@@ -31,6 +33,7 @@ public class CarController implements EventHandlerInterface {
         vehicles.add(vehicle);
         view.addVehicle(vehicle);
     }
+
 
     @Override
     public void onGas(double amount) {
@@ -83,6 +86,41 @@ public class CarController implements EventHandlerInterface {
         }
     }
 
+    @Override
+    public void addCar() {
+
+        if (vehicles.size() <= 10) {
+            int possibility = rand.nextInt(2);
+            switch (possibility) {
+                case 0:
+                    this.addVehicle(new Saab95(), 0, 400);
+                    System.out.println("add a Saab95 " + vehicles.size());
+                    break;
+                case 1:
+                    this.addVehicle(new Scania(), 0, 400);
+                    System.out.println("add a Scania " + vehicles.size());
+                    break;
+                case 2:
+                    this.addVehicle(new Volvo240(), 0, 400);
+                    System.out.println("add a Volvo240 " + vehicles.size());
+                    break;
+            }
+        }else{
+            System.out.println("Nigga ya retarded");
+        }
+    }
+
+    @Override
+    public void removeCar() {
+        if(this.vehicles.size() != 0) {
+            int n = vehicles.size() -1;
+            vehicles.remove(n);
+            view.removeVehicle(n);
+            System.out.println("removed the last car");
+            System.out.println(vehicles.size());
+        }
+    }
+
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             for (int i = 0; i < vehicles.size(); i++) {
@@ -96,5 +134,9 @@ public class CarController implements EventHandlerInterface {
                 view.renderWorld();
             }
         }
+    }
+
+    public int getListSize() {
+        return vehicles.size();
     }
 }

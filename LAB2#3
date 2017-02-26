@@ -1,0 +1,35 @@
+a.
+
+b.
+Strategy done
+State done
+Adapter done
+Iterator ???
+Composite done
+Facade done
+Module
+Factory done
+Template done
+
+- Yes:
+    + Strategy:
+        getDepth/Width/Height
+        TransportTruck.move()
+
+    + Template:
+        CarController uses directly Scania, Saab95, Volvo240
+        CarView uses EventHandlerInterface directly
+        CarController uses ViewInterface directly
+
+    + State:
+        Scannia behaves accordingly to the state of flatbed (the same goes for transportationtruck)
+
+
+- No:
+    + factory
+    + composite
+    + facade
+    + adapter
+- Maybe:
+
+Possible improvement: factory and facade for vehicle

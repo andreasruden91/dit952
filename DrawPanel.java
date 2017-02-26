@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DrawPanel extends JPanel {
 
-    List<VehicleGFX> GFXs = new ArrayList<>(3);
+    List<VehicleGFX> GFXs = new ArrayList<>();
 
     // Initializes the panel and reads the images
     public DrawPanel(int x, int y) {
@@ -19,6 +19,10 @@ public class DrawPanel extends JPanel {
     public void addVehicle(Vehicle vehicle) {
         VehicleGFX gfx = new VehicleGFX(vehicle);
         GFXs.add(gfx);
+    }
+    public void removeVehicle(int n) {
+        GFXs.remove(n);
+
     }
 
     @Override

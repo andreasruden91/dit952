@@ -8,4 +8,8 @@ public interface EventHandlerInterface {
     void onEngineToggle(boolean start);
 
     void onTurboToggle(boolean turbo);
+
+    void addCar();
+
+    void removeCar();
 }

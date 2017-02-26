@@ -8,4 +8,6 @@ public interface ViewInterface {
     void renderWorld();
 
     void addVehicle(Vehicle vehicle);
+
+    void removeVehicle(int n);
 }

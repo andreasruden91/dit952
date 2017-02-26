@@ -1,8 +1,8 @@
 import java.awt.*;
 
 public abstract class Truck extends Vehicle{
-    protected Color color; // Color of the vehicle
     protected int nrDoors; // Number of doors on the car
+    protected Color color; // Color of the vehicle
 
     /**
      * Get the number of doors
