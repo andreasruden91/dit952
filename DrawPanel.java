@@ -20,9 +20,19 @@ public class DrawPanel extends JPanel {
         VehicleGFX gfx = new VehicleGFX(vehicle);
         GFXs.add(gfx);
     }
-    public void removeVehicle(int n) {
-        GFXs.remove(n);
 
+
+    public void removeVehicle(Vehicle vehicle) {
+        boolean done = false;
+        int index = 0;
+        while (!done) {
+            if (GFXs.get(index).getVehicle() == vehicle) {
+                GFXs.remove(index);
+                System.out.println("GFXs size: " + GFXs.size());
+                done = true;
+            }
+            index ++;
+        }
     }
 
     @Override

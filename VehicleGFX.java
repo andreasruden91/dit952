@@ -31,4 +31,9 @@ public class VehicleGFX {
     BufferedImage getImg () {
         return img;
     }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
 }

@@ -9,5 +9,5 @@ public interface ViewInterface {
 
     void addVehicle(Vehicle vehicle);
 
-    void removeVehicle(int n);
+    void removeVehicle(Vehicle vehicle);
 }

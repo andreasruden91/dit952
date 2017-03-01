@@ -44,8 +44,8 @@ public class CarView extends JFrame implements ViewInterface {
     }
 
     @Override
-    public void removeVehicle(int n) {
-        drawPanel.removeVehicle(n);
+    public void removeVehicle(Vehicle vehicle) {
+        drawPanel.removeVehicle(vehicle);
     }
 
     @Override
